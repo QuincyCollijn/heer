@@ -1,0 +1,235 @@
+body, html{
+    background-color: #464646;
+}
+
+/*
+FONTS
+*/
+@font-face {
+    font-family: 'bebas_neueregular';
+    src: url('bebasneue-webfont.eot');
+    src: url('bebasneue-webfont.eot?#iefix') format('embedded-opentype'),
+    url('bebasneue-webfont.woff') format('woff'),
+    url('bebasneue-webfont.ttf') format('truetype'),
+    url('bebasneue-webfont.svg#bebas_neueregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*
+JUMBOTRON
+*/
+.jumbotron{
+    z-index: 1100;
+    margin: 0;
+    padding: 0;
+    height: 130px;
+    background-color: #e1150e;
+    -webkit-box-shadow: inset 0px 0px 180px -24px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 0px 180px -24px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 0px 180px -24px rgba(0,0,0,0.75);
+}
+.jumbotron-top{
+    height: 15px;
+    background-color: #47a13b;
+    -webkit-box-shadow: inset 0px 0px 20px 1px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    inset 0px 0px 20px 1px rgba(50, 50, 50, 0.75);
+    box-shadow:         inset 0px 0px 20px 1px rgba(50, 50, 50, 0.75);
+}
+.jumbotron-match{
+    height: 210px;
+    background-color: #f0f0f0;
+    -moz-box-shadow:    inset  0  8px 15px -1px #696868,
+    inset  0 -8px 15px -2px #696868;
+    -webkit-box-shadow: inset  0  8px 15px -1px #696868,
+    inset  0 -8px 15px -2px #696868;
+    box-shadow:        inset  0  8px 15px -1px #696868,
+    inset  0 -8px 15px -2px #696868;
+}
+img.jumbotron-logo{
+    position: absolute;
+    width: 160px;
+    margin-top: -10px;
+    z-index: 10;
+}
+
+/*
+MAIN SLIDER
+*/
+.slider-content-box{
+    background-color: rgba(0, 0, 0, 0.60);
+    position: absolute;
+    width: 40%;
+    left: 0;
+    height: 100%;
+}
+.slider-content{
+    font-family: 'Michroma', sans-serif;
+    color: #ffffff;
+    margin-top: 90px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+}
+.slider-image{
+    max-height: 350px;
+}
+.flex-control-paging{
+    z-index: 20;
+    bottom: 10px;
+    right: 0;
+    width: 60px;
+    height: 11px;
+}
+.flexslider{
+    margin-bottom: 0;
+}
+h3.slider-header{
+    margin-top: 0;
+}
+
+/*
+MATCH SLIDER
+*/
+.flexslider-match .slides img{
+    width: 100px;
+    display: inline-block;
+}
+.match-info{
+    color: #454545;
+    margin-top: 25px;
+}
+small.match-date{
+    font-family: "Michroma", sans-serif;
+    font-size: 16pt;
+}
+p.match-slider{
+    font-family: "bebas_neueregular", sans-serif;
+    margin-top: 20px;
+    font-size: 26pt;
+}
+p.match-slider img{
+    padding: 10px;
+}
+.flex-direction-nav a{
+    top:53%
+}
+@media (min-width:768px){
+    .flex-direction-nav .flex-next{
+        right: 15%;
+    }
+    .flex-direction-nav .flex-prev{
+        left: 15%;
+    }
+}
+@media (min-width:992px){
+    .flex-direction-nav .flex-next{
+        right: 20%;
+    }
+    .flex-direction-nav .flex-prev{
+        left: 20%;
+    }
+}
+@media (min-width:1200px){
+    .flex-direction-nav .flex-next{
+        right: 25%;
+    }
+    .flex-direction-nav .flex-prev{
+        left: 25%;
+    }
+}
+
+/*
+NEWS
+*/
+h2.nieuws-titel{
+    font-family: 'bebas_neueregular', sans-serif;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+img.news-thumbnail{
+    float: left;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+h3.newsblock-title{
+    color: #ffffff;
+    font-family: 'bebas_neueregular', sans-serif;
+    margin-bottom: -10px;
+}
+p.newsblock-text{
+    color: #ffffff;
+    font-family: 'Michroma', sans-serif;
+    font-size: 11px;
+}
+small.newsblock-date{
+    font-size: 9px;
+    color: #ffffff;
+    font-family: 'Michroma', sans-serif;
+}
+p.newsblock-readmore{
+    font-family: 'bebas_neueregular', sans-serif;
+    font-size: 12pt;
+    color: #3b8c38;
+}
+
+/*
+Speler van de maand
+*/
+.player-thumbnail{
+    float: left;
+    margin-right: 10px;
+}
+p.player-info{
+    color: #ffffff;
+    font-family: 'Michroma', sans-serif;
+    font-size: 9pt;
+}
+h4.player-infobig{
+    color: #ffffff;
+    font-family: 'bebas_neueregular', sans-serif;
+    font-size: 16pt;
+    margin: 0;
+
+}
+.button-player{
+    min-width: 200px;
+}
+
+/*
+HR LINE
+*/
+hr.fancy-line {
+    border: 0;
+    height: 0px;
+    position: relative;
+    position: relative;
+    position: relative;
+    margin: 0.5em 0; /* Keep other elements away from pseudo elements*/
+}
+hr.fancy-line:before {
+    top: -0.5em;
+    height: 1em;
+}
+hr.fancy-line:after {
+    content:'';
+    background-color: #464646;
+    height: 0.5em;   /* half the height of :before */
+    top: 1px;        /* height of hr*/
+}
+
+hr.fancy-line:before, hr.fancy-line:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+}
+
+hr.fancy-line, hr.fancy-line:before {
+    background: -moz-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 75%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 75%, color-stop(0%, rgb(135, 135, 135)), color-stop(75%,rgba(0,0,0,0)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 75%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.10) 0%,rgba(0,0,0,0) 75%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.10) 0%,rgba(0,0,0,0) 75%);
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.10) 0%,rgba(0,0,0,0) 75%);
+}
+

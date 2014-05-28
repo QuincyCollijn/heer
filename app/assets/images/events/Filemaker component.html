@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)http://demo.sintcornelius.dev/fm/filepicker#attachments/ds/4 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="nofollow">
+	<title>Filemaker component</title>
+
+	<link rel="stylesheet" href="http://demo.sintcornelius.dev/packages/azion/filemaker/css/main.css">
+	<style type="text/css"></style></head>
+<body>
+
+	<div class="row">
+		<style>
+	html {
+		height: 100%;
+		width: 100%;
+	}
+
+	body {
+		padding-top: 0;
+		height: 100%;
+		width: 100%;
+	}
+
+	.thumbnail.active {
+		border: 1px solid #428BCA;
+		background: #428BCA;
+	}
+
+	.thumbnail.active b {
+		color: #fff;
+	}
+
+	.thumbnail b {
+		font-size: 12px;
+		display: inline-block;
+		width: 80px;
+		height: 35px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.sort-dropzone {
+		background: #ccc;
+		height: 165px;
+		width: 110px;
+		float: left;
+		margin-right: 20px;
+		margin-bottom: 20px;
+	}
+
+	.panel {
+		border: none;
+	}
+
+	.panel-default > .panel-heading {
+		border-top-right-radius: 0px;
+		border-top-left-radius: 0px;
+	}
+
+	.panel-default > .panel-footer {
+		border-bottom-right-radius: 0px;
+		border-bottom-left-radius: 0px;
+	}
+
+	.panel-heading h3 {
+		margin: 0;
+	}
+</style>
+
+<div class="col-xs-12">
+	<div class="panel panel-default">
+		<div id="header-region" class="panel-heading"><div>
+	<a class="btn btn-primary pull-right dropzone"><i class="glyphicon glyphicon-plus-sign"></i> Bestanden toevoegen</a>
+	<h3>Gekoppelde bestanden</h3>
+</div></div>
+		<div id="main-region" class="panel-body"></div>
+		<div id="footer-region" class="panel-footer">
+	</div>
+</div>
+
+<script type="text/template" id="browser-layout-template">
+	<div class="col-xs-3" id="browser-sidebar-region"></div>
+	<div class="col-xs-9" id="browser-main-region"></div>
+</script>
+
+<!--
+<script type="text/template" id="category-listitem-view-template">
+	<a href="javascript:void(0);"><%= name %></a>
+</script>
+
+<script type="text/template" id="region-listitem-view-template">
+	<a href="javascript:void(0);"><%= name %></a>
+</script>
+
+<script type="text/template" id="noimages-view-template">
+	<div class="well dropzone">
+		<h3>Er zijn geen afbeeldingen gevonden.</h3><br>
+		Om nieuwe afbeeldingen toe te voegen klikt u op onderstaande knop of sleept u afbeeldingen vanaf uw PC op dit vlak.<br>
+		<br>
+		<a class="btn btn-primary btn-block btn-large dropzone"><i class="glyphicon glyphicon-plus-sign"></i> Bestanden toevoegen</a>
+	</div>
+</script>-->
+
+<script type="text/template" id="noattachments-view-template">
+	<div class="well">
+		<h3>Er zijn geen bijlages gevonden.</h3><br>
+		Om nieuwe bijlages toe te voegen klikt u op klikt u rechtsboven op "Bestanden toevoegen".<br>
+	</div>
+</script>
+
+<script type="text/template" id="noselectedimages-view-template">
+	<h4>Selecteer een of meerdere afbeeldingen, u kunt ze vervolgens toevoegen aan het gewenste kader</h4>
+</script>
+
+<!--<script type="text/template" id="imagegrid-itemview-template">
+	<div style="margin-right: 20px; margin-bottom: 20px">
+		<div class="thumbnail" style="position: relative">
+			<a href="#" class="js-delete" style="position: absolute; top: -15px; right: -15px"><img src="/packages/azion/filemaker/img/close.png"></a>
+			<img src="<%= preview %>" width="100" height="100">
+			<div class="caption" style="height: 55px;">
+				<b><%= name %><% if(extension) { %>.<%= extension %><% } %></b>
+			</div>
+		</div>
+	</div>
+</script>-->
+
+<script type="text/template" id="attachment-grid-itemview-template">
+	<div style="margin-right: 20px; margin-bottom: 20px">
+		<div class="thumbnail" style="position: relative">
+			<a href="#" class="js-detach" style="position: absolute; top: -15px; right: -15px"><img src="/packages/azion/filemaker/img/close.png"></a>
+			<img src="<%= preview %>" width="100" height="100">
+			<div class="caption" style="height: 55px;">
+				<b><%= name %><% if(extension) { %>.<%= extension %><% } %></b>
+			</div>
+		</div>
+	</div>
+</script>
+
+<!--
+<script type="text/template" id="selected-image-view-template">
+	<div class="pull-left" style="margin-right: 20px; margin-bottom: 20px">
+		<div class="thumbnail" style="position: relative">
+			<img src="http://static.haarderluip.dev/images/preview/<%= id %>.<%= extension %>" width="50">
+		</div>
+	</div>
+</script>
+
+<script type="text/template" id="selected-images-view-template">
+	<legend>Geselecteerde afbeeldingen</legend>
+	<div id="selected-images"></div>
+	<legend>Toevoegen aan</legend>
+	<div class="input-group">
+		<select>
+			<option>Kies een kader</option>
+			<%= _.map(arguments[0], function(model) {
+				return '<option value="' + model.id + '">' + model.name + '</option>';
+			}) %>
+		</select>
+		<div class="input-group-btn">
+			<a class="js-add btn btn-primary" style="margin-left: 10px;">Toevoegen</a>
+		</div>
+		<span class="an-element-that-prevents-the-button-above-from-getting-its-rounded-corners-removed"></span>
+	</div>
+</script>-->
+
+<!--<script type="text/template" id="editable-header-view">
+	<a class="btn btn-primary pull-right dropzone"><i class="glyphicon glyphicon-plus-sign"></i> Bestanden toevoegen</a>
+	<% if(isEditing) { %>
+		<div class="col-xs-3">
+			<input type="text" value="<%= model.name %>" class="form-control">
+		</div> <a class="btn btn-primary js-save">Opslaan <i class="glyphicon glyphicon-ok"></i></a> <a class="js-cancel btn btn-danger">Annuleren <i class="glyphicon glyphicon-remove"></i></a>
+	<% } else { %>
+	<h3>
+		<%= model.name %>
+		<a class="js-edit btn btn-default btn-small" data-toggle="tooltip" data-title="Categorie naam wijzigen" data-placement="right"><i class="glyphicon glyphicon-pencil"></i></a>
+	</h3>
+	<% } %>
+</script>-->
+
+<script type="text/template" id="default-header-view">
+	<a class="btn btn-primary pull-right dropzone"><i class="glyphicon glyphicon-plus-sign"></i> Bestanden toevoegen</a>
+	<h3>Bestanden</h3>
+</script>
+
+<script type="text/template" id="attachments-header-view">
+	<a class="btn btn-primary pull-right dropzone"><i class="glyphicon glyphicon-plus-sign"></i> Bestanden toevoegen</a>
+	<h3>Gekoppelde bestanden</h3>
+</script>
+
+<!--<script type="text/template" id="sidebar-layout-template">
+	<legend>Kaders</legend>
+	<div id="sidebar-top-region">
+	</div><br>
+	<legend>Categorieën <a class="js-add btn btn-default pull-right btn-small" data-toggle="tooltip" data-title="Categorie toevoegen"><i class="glyphicon glyphicon-plus-sign"></i></a></legend>
+	<div id="sidebar-bottom-region">
+	</div>
+</script>-->
+	</div>
+
+	<script src="./Filemaker component_files/jquery.min.js"></script>
+<script src="./Filemaker component_files/underscore.js"></script>
+<script src="./Filemaker component_files/backbone.js"></script>
+<script src="./Filemaker component_files/backbone.marionette.js"></script>
+<script src="./Filemaker component_files/dropzone.js"></script>
+<script>
+var resourceMap = {
+	article: 'Azion\\Article\\Models\\Article',
+page: 'Azion\\Page\\Models\\Page',
+gallery: 'Azion\\Gallery\\Models\\Gallery',
+event: 'SintCornelius\\Events\\Models\\Event',
+sponsor: 'SintCornelius\\Sponsors\\Sponsor'};
+
+var dropzoneOptions = {
+	addedfile: function(file) {
+		return $('<div>')[0];
+	},
+	url: "/api/v1/filesystem/files/upload",
+	dictDefaultMessage: "",
+	thumbnailWidth: 100,
+	thumbnailHeight: 100,
+	sending: function(file, xhr, formData) {
+		if(app.activeCategory && app.activeCategory.id !== 'all') {
+			formData.append('category_id', app.activeCategory.id);
+		}
+	},
+	thumbnail: function(file, dataUrl) {},
+	error: function(file, message) {},
+	processingfile: function(file) {},
+	uploadprogress: function(file, progress, bytesSent) {},
+	success: function(file) {},
+};
+
+/*!
+* backbone.cacheit.js v0.1.0
+* Copyright 2012, Tim Branyen (@tbranyen)
+* backbone.cacheit.js may be freely distributed under the MIT license.
+*/
+(function(window) {
+
+"use strict";
+
+// Localize global dependency references.
+var Backbone = window.Backbone;
+var $ = window.$;
+var _ = window._;
+
+// Patch the fetch method to retain a reference.
+_.each(["Model", "Collection"], function(ctor) {
+  // Retain a copy of the original fetch method, since we are overidding it.
+  var oldFetch = Backbone[ctor].prototype.fetch;
+
+  // Override both Model and Collection `fetch` methods.
+  var newFetch = Backbone[ctor].prototype.fetch = function(options) {
+    options = options || {};
+
+    // Save a reference to the original deferred.
+    var oldDef = this._def;
+
+    // Return early.
+    if (this._def && !options.reload && !this.reload) {
+      return this._def.promise();
+    }
+
+    // If a deferred doesn't exist, create one.  If the clear flag is provided,
+    // jump in to create a new deferred.
+    this._def = newFetch.deferred();
+
+    // If the clear was provided and there is an existing deferred, resolve it
+    // once this has resolved.
+    if (options.reload && oldDef) {
+      this._def.done(oldDef.resolve);
+    }
+
+    // Call the original `fetch` method and store its return value (jqXHR).
+    var req = oldFetch.apply(this, arguments);
+
+    // Once the request has finished, resolve this deferred.
+    req.done(_.bind(function() {
+      this._def.resolveWith(this, [this]);
+    }, this));
+
+    // Return the deferred to wait with.
+    return this._def.promise();
+  };
+
+  // Allow the jQuery dependency to be swapped out to use this in other
+  // enviornments.
+  Backbone[ctor].prototype.fetch.deferred = function() {
+    return $.Deferred();
+  };
+});
+
+})(this);
+
+function modelGetter(model) {
+	return function(id, data) {
+		var fingerprint = {
+			id: id,
+			data: data
+		};
+
+		if( ! this.requests) {
+			this.requests = [];
+		}
+
+		for(request in this.requests) {
+			if(_.isEqual(fingerprint, _.omit(this.requests[request], "def")))
+			{
+				return this.requests[request].def;
+			}
+		}
+
+		fingerprint.def = new model({id: id}).fetch(data);
+		this.requests.push(fingerprint);
+
+		return fingerprint.def;
+	}
+}
+
+function collectionGetter(collection) {
+	return function(data) {
+		var fingerprint = {
+			data: data
+		};
+
+		if( ! this.requests) {
+			this.requests = [];
+		}
+
+		for(request in this.requests) {
+			if(_.isEqual(fingerprint, _.omit(this.requests[request], "def")))
+			{
+				return this.requests[request].def;
+			}
+		}
+
+		fingerprint.def = new collection().fetch(data);
+		this.requests.push(fingerprint);
+
+		return fingerprint.def;
+	}
+}
+
+var App = {
+	Config: {
+		baseUrl: ""
+	},
+	Models: {},
+	Collections: {},
+	Views: {},
+	Layouts: {},
+	Regions: {}
+};
+
+var app = new Marionette.Application();
+app.addInitializer(function() {
+	app.router = new App.Router();
+	Backbone.history.start();
+});
+
+app.addRegions({
+	headerRegion: "#header-region",
+	mainRegion: "#main-region",
+	footerRegion: "#footer-region"
+});
+
+_.extend(app, {
+	views: {},
+	models: {},
+	collections: {},
+	regions: {}
+});
+
+// Router
+App.Router = Backbone.Router.extend({
+	routes: {
+		// "": "index",
+		// "filter/:type/:id": "index",
+
+		"attachments/:resourceName/:resourceId": "attachments",
+
+		// "selector/:resource/:id": "selector",
+		// "browser": "browser",
+		// "browser/:type/:type_id": "browser",
+		// "manager": "uploadImage",
+		// "manager/:image_id": "editImage"
+	},
+
+	// indexLoaded: function(filterType, filterId) {
+	// 	var activeFilterModel,
+	// 		category,
+	// 		region,
+	// 		header,
+	// 		footer,
+	// 		main,
+	// 		sidebar,
+	// 		categoryList,
+	// 		files,
+	// 		regionList,
+	// 		activeCategoryId,
+	// 		fileCollection = app.fileCollection,
+	// 		regionCollection = app.regionCollection,
+	// 		categoryCollection = app.categoryCollection;
+
+	// 	// Figure out the header model and view
+	// 	if(filterType == 'category') {
+	// 		category = categoryCollection.findWhere({
+	// 			id: filterId
+	// 		});
+	// 		activeCategoryId = category.get('id');
+	// 		header = new App.Views.CategoryHeaderView({
+	// 			model: category
+	// 		});
+	// 	}
+	// 	else if(filterType == 'region') {
+	// 		region = regionCollection.findWhere({
+	// 			id: filterId
+	// 		});
+	// 		header = new App.Views.RegionHeaderView({
+	// 			model: region
+	// 		});
+	// 	}
+	// 	else {
+	// 		header = new App.Views.DefaultHeaderView();
+	// 	}
+	// 	app.headerRegion.show(header);
+
+	// 	// Footer view
+	// 	footer = new App.Views.SelectedImagesView({
+	// 		collection: fileCollection,
+	// 		model: regionCollection
+	// 	});
+	// 	app.footerRegion.show(footer);
+
+	// 	// Main layout
+	// 	main = new App.Layouts.BrowserLayout();
+	// 	app.mainRegion.show(main);
+
+	// 	// Sidebar
+	// 	sidebar = new App.Layouts.SidebarLayout();
+	// 	main.sidebarRegion.show(sidebar);
+
+	// 	// Regions
+	// 	regionList = new App.Views.RegionListView({
+	// 		collection: regionCollection
+	// 	});
+	// 	sidebar.topRegion.show(regionList);
+
+	// 	// Categories
+	// 	categoryList = new App.Views.CategoryListView({
+	// 		collection: categoryCollection,
+	// 		activeCategoryId: activeCategoryId
+	// 	});
+	// 	sidebar.bottomRegion.show(categoryList);
+
+	// 	// Images
+	// 	files = new App.Views.ImageGridView({
+	// 		collection: fileCollection
+	// 	});
+	// 	main.mainRegion.show(files);
+	// },
+
+	// index: function(filterType, filterId) {
+	// 	var fileCollection = App.Collections.FileCollection.get();
+	// 	var regionCollection = App.Collections.RegionCollection.get();
+	// 	var categoryCollection = App.Collections.CategoryCollection.get();
+
+	// 	$.when(fileCollection, regionCollection, categoryCollection).done(_.bind(function(fileCollection, regionCollection, categoryCollection) {
+	// 		app.fileCollection = fileCollection;
+	// 		app.regionCollection = regionCollection;
+	// 		app.categoryCollection = categoryCollection;
+
+	// 		this.indexLoaded(filterType, filterId);
+	// 	}, this));
+	// },
+
+	attachmentsLoaded: function(attachableType, attachableId) {
+		var header,
+			footer,
+			main,
+			imageGrid,
+			fileCollection = app.attachedFileCollection;
+
+		header = new App.Views.AttachmentsHeaderView();
+		app.headerRegion.show(header);
+
+		// Attachments
+		attachments = new App.Views.AttachmentGridView({
+			collection: fileCollection
+		});
+		app.mainRegion.show(attachments);
+	},
+
+	attachments: function(attachableType, attachableId) {
+		app.attachableType = resourceMap[attachableType];
+		app.attachableId = attachableId;
+
+		var attachedFileCollection = App.Collections.AttachedFileCollection.get({
+			data: {
+				filter: {
+					attachable_type: resourceMap[attachableType],
+					attachable_id: attachableId
+				},
+				with: [
+					'file'
+				]
+			}
+		});
+
+		attachedFileCollection.done(_.bind(function(attachedFileCollection) {
+			app.attachedFileCollection = attachedFileCollection;
+
+			this.attachmentsLoaded(attachableType, attachableId);
+		}, this));
+	},
+
+	// uploadImage: function() {
+	// 	var imageModel = new App.Models.File();
+
+	// 	var imageUploadView = new App.Views.ImageUploadView({
+	// 		model: imageModel
+	// 	});
+	// 	var ImageCropView = new App.Views.ImageCropView({
+	// 		model: imageModel
+	// 	});
+
+	// 	var layout = new App.Layouts.ManagerLayout();
+	// 	app.mainRegion.show(layout);
+
+	// 	layout.formRegion.show(imageUploadView);
+	// 	layout.imageRegion.show(ImageCropView);
+	// },
+
+	// editImageDataLoaded: function(imageModel) {
+	// 	var imageFormView = new App.Views.ImageFormView({
+	// 		model: imageModel
+	// 	});
+	// 	var imageCropView = new App.Views.ImageCropView({
+	// 		model: imageModel
+	// 	});
+
+	// 	var layout = new App.Layouts.ManagerLayout();
+	// 	app.mainRegion.show(layout);
+
+	// 	layout.formRegion.show(imageFormView);
+	// 	layout.imageRegion.show(imageCropView);
+	// },
+
+	// editImage: function(imageId) {
+	// 	var imageModel = new App.Models.File({
+	// 		id: imageId
+	// 	}).fetch();
+
+	// 	$.when(imageModel).done(_.bind(this.editImageDataLoaded, this));
+	// },
+
+	// selector: function(resource, id) {
+	// 	App.config = {
+	// 		resource: resource,
+	// 		id: id
+	// 	};
+
+	// 	app.router.navigate("browser", {trigger: true, replace: true});
+	// }
+});
+
+
+// Models
+// App.Models.Category = Backbone.Model.extend({
+// 	urlRoot: "/api/v1/filesystem/categories",
+// });
+
+// App.Models.Region = Backbone.Model.extend({
+// });
+
+App.Models.File = Backbone.Model.extend({
+	urlRoot: "/api/v1/filesystem/files"
+});
+App.Models.File.get = modelGetter(App.Models.File);
+
+App.Models.Attachment = Backbone.Model.extend({
+	urlRoot: "/api/v1/filesystem/attachments"
+});
+App.Models.Attachment.get = modelGetter(App.Models.Attachment);
+
+App.Collections.Attachments = Backbone.Collection.extend({
+	model: App.Models.Attachment,
+
+	url: "/api/v1/filesystem/attachments"
+});
+App.Collections.Attachments.get = collectionGetter(App.Collections.Attachments);
+
+App.Collections.AttachedFileCollection = Backbone.Collection.extend({
+	model: App.Models.File,
+
+	url: '/api/v1/filesystem/attachments',
+
+	parse: function(attachments) {
+		return _.pluck(attachments, 'file');
+	}
+});
+App.Collections.AttachedFileCollection.get = collectionGetter(App.Collections.AttachedFileCollection);
+
+App.Collections.FileCollection = Backbone.Collection.extend({
+	model: App.Models.File,
+
+	url: "/api/v1/filesystem/files",
+
+	getSelected: function() {
+		return this.where({is_selected: true});
+	}
+});
+App.Collections.FileCollection.get = collectionGetter(App.Collections.FileCollection)
+
+// Collections
+// App.Collections.CategoryCollection = Backbone.Collection.extend({
+// 	model: App.Models.Category,
+
+// 	url: "/api/v1/filesystem/categories"
+// });
+// App.Collections.CategoryCollection.get = collectionGetter(App.Collections.CategoryCollection);
+
+// App.Collections.RegionCollection = Backbone.Collection.extend({
+// 	model: App.Models.Region,
+
+// 	url: "/api/v1/image/regions"
+// });
+// App.Collections.RegionCollection.get = collectionGetter(App.Collections.RegionCollection);
+
+// Layouts - Browser
+App.Layouts.BrowserLayout = Marionette.Layout.extend({
+	template: "#browser-layout-template",
+
+	regions: {
+		sidebarRegion: "#browser-sidebar-region",
+		mainRegion: "#browser-main-region"
+	}
+});
+
+// App.Layouts.SidebarLayout = Marionette.Layout.extend({
+// 	template: "#sidebar-layout-template",
+
+// 	events: {
+// 		"click .js-add": "addCategory"
+// 	},
+
+// 	regions: {
+// 		topRegion: "#sidebar-top-region",
+// 		bottomRegion: "#sidebar-bottom-region"
+// 	},
+
+// 	addCategory: function() {
+// 		var category = new App.Models.Category().save({
+// 			name: "Nieuwe categorie"
+// 		}, {
+// 			success: function(model) {
+// 				app.categoryCollection.add(model);
+// 			}
+// 		});
+// 	},
+
+// 	onShow: function() {
+// 		$('[data-toggle="tooltip"]').tooltip();
+// 	}
+// });
+
+// Regions - Browser
+// App.Regions.BrowserSidebarRegion = Marionette.Region.extend({
+// });
+
+// App.Regions.BrowserMainRegion = Marionette.Region.extend({
+// });
+
+// Regions - Manager
+App.Regions.ManagerFormRegion = Marionette.Region.extend({
+	el: "#manager-form-region"
+});
+
+App.Regions.ManagerImageRegion = Marionette.Region.extend({
+	el: "#manager-image-region"
+});
+
+// Regions - Selector
+// App.Regions.SelectorSidebarRegion = Marionette.Region.extend({
+// });
+
+// App.Regions.SelectorMainRegion = Marionette.Region.extend({
+// });
+
+// Views - Browser
+// App.Views.CategoryListItemView = Marionette.ItemView.extend({
+// 	tagName: "li",
+
+// 	template: "#category-listitem-view-template",
+
+// 	events: {
+// 		'click': 'setActive'
+// 	},
+
+// 	initialize: function() {
+// 		this.listenTo(this.model, "change", this.render);
+// 	},
+
+// 	isActive: function() {
+// 		return this.model.get('id') == this.options.collectionOptions.activeCategoryId;
+// 	},
+
+// 	setActive: function() {
+// 		app.router.navigate("filter/category/" + this.model.get('id'), {
+// 			trigger: true,
+// 			replace: true
+// 		});
+// 	},
+
+// 	onRender: function() {
+// 		if(this.isActive()) {
+// 			this.$el.addClass('active');
+// 		}
+// 	}
+// });
+
+// App.Views.CategoryListView = Marionette.CollectionView.extend({
+// 	tagName: "ul",
+
+// 	className: "row nav nav-pills nav-stacked",
+
+// 	itemView: App.Views.CategoryListItemView,
+
+// 	itemViewOptions: function(model, index) {
+// 	  	return {
+// 			collectionOptions: this.options
+// 		};
+// 	}
+// });
+
+
+/* HEADERS */
+
+App.Views.DefaultHeaderView = Backbone.Marionette.ItemView.extend({
+	template: "#default-header-view",
+
+	// onShow: function() {
+	// 	$('body').dropzone(dropzoneOptions);
+	// }
+});
+App.Views.AttachmentsHeaderView = Backbone.Marionette.ItemView.extend({
+	template: "#attachments-header-view",
+
+	onShow: function() {
+		var combinedDropzoneOptions = _.extend(dropzoneOptions, {
+			success: function(file, response) {
+				var file = new App.Models.File(response);
+				app.attachedFileCollection.add(file);
+				var attachment = new App.Models.Attachment({
+					file_id: file.get('id'),
+					attachable_id: app.attachableId,
+					attachable_type: app.attachableType
+				});
+				attachment.save();
+			},
+		});
+
+		if( ! $('body')[0].dropzone) {
+			$('body').dropzone(combinedDropzoneOptions);
+			this.$('.dropzone').dropzone(combinedDropzoneOptions);
+		}
+	}
+});
+// App.Views.EditableHeaderView = Marionette.ItemView.extend({
+// 	template: "#editable-header-view",
+
+// 	events: {
+// 		"click .js-edit": "edit",
+// 		"click .js-save": "save",
+// 		"click .js-cancel": "cancel",
+// 		"keyup input": "update"
+// 	},
+
+// 	isEditing: false,
+
+// 	initialize: function() {
+// 		this.originalName = this.model.get('name');
+// 	},
+
+// 	serializeData: function() {
+// 		return {
+// 			model: this.model.toJSON(),
+// 			isEditing: this.isEditing
+// 		};
+// 	},
+
+// 	setIsEditing: function(isEditing) {
+// 		this.isEditing = isEditing;
+// 		this.render();
+// 	},
+
+// 	edit: function() {
+// 		this.setIsEditing(true);
+// 	},
+
+// 	cancel: function() {
+// 		this.model.set({
+// 			name: this.originalName
+// 		});
+// 		this.setIsEditing(false);
+// 	},
+
+// 	update: function() {
+// 		this.model.set({
+// 			name: this.$('input').val()
+// 		});
+// 	},
+
+// 	save: function() {
+// 		this.model.save();
+// 		this.setIsEditing(false);
+// 	},
+
+// 	onShow: function() {
+// 		this.$('.dropzone').dropzone(dropzoneOptions);
+// 	}
+// });
+// App.Views.CategoryHeaderView = App.Views.EditableHeaderView.extend({});
+// App.Views.RegionHeaderView = App.Views.EditableHeaderView.extend({});
+
+/* IMAGES */
+
+// App.Views.SelectedImageView = Marionette.ItemView.extend({
+// 	template: "#selected-image-view-template"
+// });
+// App.Views.NoSelectedImagesView = Marionette.ItemView.extend({
+// 	template: "#noselectedimages-view-template"
+// });
+// App.Views.SelectedImagesView = Marionette.CompositeView.extend({
+// 	template: "#selected-images-view-template",
+
+// 	itemView: App.Views.SelectedImageView,
+
+// 	emptyView: App.Views.NoSelectedImagesView,
+
+// 	itemViewContainer: "#selected-images",
+
+// 	events: {
+// 		"click .js-add": "addToRegion"
+// 	},
+
+// 	addToRegion: function() {
+// 		var regionId = this.$('select option:selected').attr('value');
+// 		if(typeof regionId == 'undefined') {
+// 			alert('Kies het kader waaraan u de afbeeldingen wilt toevoegen.');
+// 			return;
+// 		}
+
+// 		var imageIds = this.collection.map(function(image) {
+// 			return image.get('id');
+// 		});
+
+// 		console.log(imageIds);
+// 		$.post('/api/v1/images/linktoregion', {
+// 			image_ids: imageIds,
+// 			region_id: regionId
+// 		});
+// 	}
+// });
+
+// Views - Selector
+// App.Views.RegionListItemView = Marionette.ItemView.extend({
+// 	tagName: "li",
+
+// 	template: "#region-listitem-view-template",
+
+// 	triggers: {
+// 		"click": "active:category:change"
+// 	},
+
+// 	modelEvents: {
+// 		"change:is_active": "isActiveChanged"
+// 	},
+
+// 	initialize: function() {
+// 		this.isActiveChanged(this.model);
+// 	},
+
+// 	isActiveChanged: function(model) {
+// 		if(model.get('is_active')) {
+// 			this.$el.addClass('active');
+// 		}
+// 		else {
+// 			this.$el.removeClass('active');
+// 		}
+// 	},
+
+// 	onActiveCategoryChange: function(e) {
+// 		this.model.collection.each(function(model) {
+// 			model.set({is_active: false});
+// 		});
+// 		this.model.set({is_active: true});
+// 		app.router.navigate("browser/region/" + this.model.get('id'), {
+// 			trigger: true,
+// 			replace: true
+// 		});
+// 	}
+// });
+
+// App.Views.RegionListView = Marionette.CollectionView.extend({
+// 	tagName: "ul",
+
+// 	className: "row nav nav-pills nav-stacked",
+
+// 	itemView: App.Views.RegionListItemView
+// });
+
+
+// Views - General
+// App.Views.NoImagesView = Marionette.ItemView.extend({
+// 	template: "#noimages-view-template",
+
+// 	onShow: function() {
+// 		this.$('.dropzone').dropzone(dropzoneOptions);
+// 	}
+// });
+
+App.Views.AttachmentGridItemView = Marionette.ItemView.extend({
+	template: "#attachment-grid-itemview-template",
+
+	className: "pull-left",
+
+	events: {
+		'click .js-detach': 'detach'
+	},
+
+	detach: function(e) {
+		e.preventDefault();
+
+		var attachments = App.Collections.Attachments.get({
+			data: {
+				filter: {
+					attachable_type: app.attachableType,
+					attachable_id: app.attachableId,
+					file_id: this.model.get('id')
+				}
+			}
+		});
+
+		var fileId = this.model.get('id');
+		attachments.done(function(attachments) {
+			var model = app.attachedFileCollection.findWhere({
+				id: fileId
+			});
+			app.attachedFileCollection.remove(model);
+			attachments.slice(0,1)[0].destroy();
+		});
+	}
+});
+
+App.Views.NoAttachmentsView = Backbone.Marionette.ItemView.extend({
+	template: "#noattachments-view-template"
+});
+
+App.Views.AttachmentGridView = Marionette.CollectionView.extend({
+	itemView: App.Views.AttachmentGridItemView,
+
+	emptyView: App.Views.NoAttachmentsView,
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+App.Views.ImageGridItemView = Marionette.ItemView.extend({
+	template: "#imagegrid-itemview-template",
+
+	className: "pull-left",
+
+	triggers: {
+		"click": "image:selection:toggle"
+	},
+
+	isSelected: false,
+
+	onImageSelectionToggle: function() {
+		this.model.set({is_selected: !this.model.get('is_selected')});
+		var selectedImagesCollection = app.collections.selectedImagesCollection;
+		if(this.model.get('is_selected') && ! selectedImagesCollection.contains(this.model)) {
+			selectedImagesCollection.add(this.model);
+		}
+		else if(selectedImagesCollection.contains(this.model)) {
+			selectedImagesCollection.remove(this.model)
+		}
+		this.$('.thumbnail').toggleClass('active');
+	}
+});
+
+App.Views.ImageGridView = Marionette.CollectionView.extend({
+	itemView: App.Views.ImageGridItemView,
+
+	emptyView: App.Views.NoImagesView,
+
+	getSelected: function() {
+		return _.filter(this.children.toArray(), function(view) {
+			return view.model.get('is_selected') == true;
+		});
+	},
+
+	onRender: function() {
+		// console.log('got some items in my griddy baby');
+		// console.log(this.$('.pull-left').size());
+		// $( "#draggable" ).draggable();
+		//    $( "#droppable" ).droppable({
+		//      drop: function( event, ui ) {
+		//        $( this )
+		//          .addClass( "ui-state-highlight" )
+		//          .find( "p" )
+		//            .html( "Dropped!" );
+		//      }
+		//    });
+	}
+});
+
+app.start();
+</script>
+
+
+
+</div></body></html>
