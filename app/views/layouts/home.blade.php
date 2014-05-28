@@ -8,6 +8,7 @@
       <!-- Place somewhere in the <body> of your page -->
           <div class="flexslider flexslider-main">
               <ul class="slides slide-main">
+
               @foreach($events as $event)
                   <li>
                   <div class="container">
@@ -55,22 +56,25 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-6 center-block">
+                <div class="col-md-6">
                     <h2 class="nieuws-titel">Laatste Nieuws</h2>
 
                     @foreach($news as $nieuws)
-                        <div class="newsblock">
-                        @if(isset($nieuws->img_url))
-                            <img class="news-thumbnail" width="130px" height="130px" src="{{ $nieuws->img_url }}">
-                        @endif
-                            <h3 class="newsblock-title">{{ $nieuws->title }}</h3>
-                            <small class="newsblock-date">{{ date("d-m-Y", strtotime($nieuws->created_at)) }}</small>
-                            <p class="newsblock-text">{{ substr($nieuws->body, 0, 250) }}</p>
-                            <p class="newsblock-readmore"><a href="nieuws/{{ $nieuws->slug }}" >Lees Meer</a></p>
-                        </div>
+                    <div class="media">
+                      @if(isset($nieuws->img_url))
+                      <a class="pull-left" href="nieuws/{{ $nieuws->slug }}">
+                        <img class="media-object" width="130px" src="{{ $nieuws->img_url }}">
+                      </a>
+                      @endif
+                      <div class="media-body">
+                        <h4 class="newsblock-title">{{ $nieuws->title }}</h4>
+                        <small class="newsblock-date">{{ date("d-m-Y", strtotime($nieuws->created_at)) }}</small>
+                        <p class="newsblock-text">{{ substr($nieuws->body, 0, 250) }}</p>
+                        <p class="newsblock-readmore"><a href="nieuws/{{ $nieuws->slug }}" >Lees Meer</a></p>
+                      </div>
+                    </div>
 
-                        <br>
-                        <hr class="fancy-line">
+                    <hr class="fancy-line">
                     @endforeach
 
                 </div>

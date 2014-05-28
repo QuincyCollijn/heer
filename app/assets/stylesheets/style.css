@@ -147,12 +147,11 @@ h2.nieuws-titel{
     color: #ffffff;
     margin-bottom: 10px;
 }
-img.news-thumbnail{
-    float: left;
-    margin-top: 5px;
-    margin-right: 10px;
+img.media-object{
+    margin-top: 20px;
 }
-h3.newsblock-title{
+h4.newsblock-title{
+    font-size: 24px;
     color: #ffffff;
     font-family: 'bebas_neueregular', sans-serif;
     margin-bottom: -10px;
@@ -167,7 +166,7 @@ small.newsblock-date{
     color: #ffffff;
     font-family: 'Michroma', sans-serif;
 }
-p.newsblock-readmore{
+p.newsblock-readmore a{
     font-family: 'bebas_neueregular', sans-serif;
     font-size: 12pt;
     color: #3b8c38;
