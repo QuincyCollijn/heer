@@ -1,7 +1,16 @@
 @extends('layouts.master')
 
 @section('content')
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+  ga('create', 'UA-51442599-1', 'quincycollijn.nl');
+  ga('send', 'pageview');
+
+</script>
     <div class="container">
       <div class="row">
 
@@ -17,7 +26,7 @@
                               <small class="slider-date">{{ date("d-m-Y", strtotime($event->date_start)) }}</small>
                               <h3 class="slider-header">{{ $event->title }}</h3>
                               <p class="slider-text">{{ $event->lead }}</p>
-                              <button type="button" class="btn btn-primary btn-lg">Meer info!</button>
+                              <a href="evenementen/{{ $event->slug }}"><button type="button" class="btn btn-primary btn-lg">Meer info!</button></a>
                           </div>
                       </div>
                      </div>
@@ -41,7 +50,7 @@
                         <li>
                             <div class="col-md-12 match-info">
                                     <small class="match-date">{{ date("F j - H:i", strtotime($match->date)) }}</small>
-                                    <p class="match-slider">{{ $match->homeclub->naam }} <img class="match-logo" src={{ $match->homeclub->img_url }}> - <img width"140px" class="match-logo" src={{ $match->awayclub->img_url }}> {{ $match->awayclub->naam }} </p>
+                                    <p class="match-slider">{{ $match->homeclub->naam }} <img class="match-logo" src={{ $match->homeclub->img_url }}> - <img class="match-logo" src={{ $match->awayclub->img_url }}> {{ $match->awayclub->naam }} </p>
                             </div>
                         </li>
                     @endforeach
@@ -63,7 +72,7 @@
                     <div class="media">
                       @if(isset($nieuws->img_url))
                       <a class="pull-left" href="nieuws/{{ $nieuws->slug }}">
-                        <img class="media-object" width="130px" src="{{ $nieuws->img_url }}">
+                        <img class="media-object media-short-img" width="130px" height="130px" src="{{ $nieuws->img_url }}">
                       </a>
                       @endif
                       <div class="media-body">

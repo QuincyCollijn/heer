@@ -14,3 +14,8 @@
 Route::get('/', 'HomeController@index');
 
 Route::get('nieuws/{slug}', 'NewsController@show');
+
+Route::get('evenementen/{slug}', 'EventController@show');
+
+Route::get('nieuws', 'NewsController@all');
+Route::get('evenementen', 'EventController@all');

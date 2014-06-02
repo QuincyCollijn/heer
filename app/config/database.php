@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'heer_web',
+			'database'  => 'heer',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',

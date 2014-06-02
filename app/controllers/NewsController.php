@@ -6,6 +6,12 @@ Class NewsController extends BaseController
 	{
 		$news = News::where('slug', '=', $slug)->get();
 
+		return View::make('layouts.nieuwsitem')->with('news', $news);
+	}
+
+	public function all(){
+		$news = News::orderBy('created_at', 'desc')->paginate(5);
+
 		return View::make('layouts.nieuws')->with('news', $news);
 	}
 }
