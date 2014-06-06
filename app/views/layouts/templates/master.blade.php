@@ -19,58 +19,12 @@
   </head>
 
   <body>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-51442599-1', 'quincycollijn.nl');
-  ga('send', 'pageview');
-
-</script>
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/nl_NL/sdk.js#xfbml=1&appId=1438322229756322&version=v2.0";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-  </script>
-
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron-top"></div>
     <div class="jumbotron">
          <div class="container">
               <a href="{{ url() }}"><img class="jumbotron-logo" src="/assets/logo.png" alt="logo" /></a>
-              <nav class="navbar navbar-mainpage navbar-default" role="navigation">
-                <div class="container">
-                  <!-- Brand and toggle get grouped for better mobile display -->
-                  <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                    </button>
-                  </div>
-                  <!-- Collect the nav links, forms, and other content for toggling -->
-                  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-                    <ul class="nav navbar-nav">
-                    @foreach($pages as $page)
-                        <li class="dropdown">
-                          <a href="{{ $page->url }}" class="dropdown-toggle" data-toggle="dropdown">{{ $page->name }}</a>
-                          <ul class="dropdown-menu">
-                            @foreach($page->subpages as $subpage)
-                            <li class="li-dropdown"><a class="dropdown-color" href="{{ $page->url }}/{{ $subpage->url }}">{{ $subpage->name }}</a></li>
-                            @endforeach
-                          </ul>
-                        </li>
-                    @endforeach
-                  </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
-              </nav>
+              @include('layouts.templates.navigation')
          </div>
     </div>
 

@@ -6,13 +6,13 @@ Class EventController extends BaseController
 	{
 		$events = Events::where('slug', '=', $slug)->get();
 
-		return View::make('layouts.eventsitem')->with('events', $events);
+		return View::make('layouts.events.eventsitem')->with('events', $events);
 	}
 
 	public function all()
 	{
 		$events = Events::orderBy('date_start', 'desc')->paginate(5);
 
-		return View::make('layouts.events')->with('events', $events);
+		return View::make('layouts.events.events')->with('events', $events);
 	}
 }

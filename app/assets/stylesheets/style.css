@@ -2,6 +2,7 @@ body, html{
     background-color: #464646;
 }
 
+
 /*
 FONTS
 */
@@ -251,13 +252,13 @@ HR LINE
 hr.fancy-line {
     border: 0;
     height: 0px;
+    margin-bottom: 50px;
     position: relative;
-    position: relative;
-    position: relative;
-    margin: 0.5em 0; /* Keep other elements away from pseudo elements*/
+
 }
 hr.fancy-line:before {
     top: -0.5em;
+    margin-top: 10px;
     height: 1em;
 }
 hr.fancy-line:after {
@@ -341,7 +342,6 @@ p.media-body{
 
 .navbar-mainpage{
     margin-left: 100px;
-    position: relative;
     margin-top: 80px;
     background-color: transparent;
     border-radius: 0;
@@ -376,11 +376,11 @@ li.li-dropdown{
     text-align: left !important;
 }
 .dropdown-menu  li  a{
-    display: inline;
-    margin-top: -10px;
+     display: inline;
+     margin-top: -10px;
 }
-.dropdown-menu  li:hover{
-    border-bottom: 1px solid #3b8c38;
+a.dropdown-color:hover{
+    color: red;
 }
 @media (max-width:768px){
     img.media-news-img{
@@ -393,6 +393,11 @@ li.li-dropdown{
 .navbar-nav  li  .dropdown-menu{
     margin-top: -1px;
     z-index: 20;
+}
+.dropdown-menu{
+    border: none;
+    margin: 0;
+    min-width: 0;
 }
 .breadcrumb{
     margin-top: -25px;
@@ -409,6 +414,70 @@ li.li-dropdown{
 p.media-body, small.media-date{
     font-family: 'Michroma', sans-serif;
 }
-.media{
-    margin-bottom: 50px;
+@media (max-width:768px){
+    .media-big{
+        display: none;
+    }
+}
+.player-background{
+    min-width: 201px;
+    max-width: 201px;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.50);
+    height: 45px;
+}
+h4.player-name{
+    position: absolute;
+    margin-right: 20px;
+    text-align: center;
+    margin-left: 7px;
+    margin-top: 10px;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: 'Michroma', sans-serif;
+}
+h4.player-number{
+    text-align: center;
+    width: 40px;
+    margin-top: 10px;
+    right: 5px;
+    float: right;
+    color: #ffffff;
+}
+.selectie-container{
+    padding: 30px;
+}
+.thumbnail{
+    background-color: transparent;
+    border: none;
+    min-width: 150px;
+}
+.number-background{
+    font-size: 16px;
+    float: right;
+    font-family: 'Michroma', sans-serif;
+    background-color: rgba(56, 126, 53, 0.30);
+    width: 40px;
+    height: 45px;
+}
+.col-selectie{
+    margin-bottom: 10px;
+}
+.player-picture{
+    float: left;
+    margin-right: 10px;
+}
+h4.spelervdweek{
+    font-size: 60px;
+}
+p.spelervdweek-info{
+    font-size: 40px;
+    margin-top: -15px;
+}
+@media (max-width:768px){
+    p.no-matches{
+        font-size: 16px;
+        color: #464646;
+        margin-top: 70px;
+    }
 }

@@ -17,5 +17,14 @@ Route::get('nieuws/{slug}', 'NewsController@show');
 
 Route::get('evenementen/{slug}', 'EventController@show');
 
+Route::get('evenementen', 'EventController@all');
+
 Route::get('nieuws', 'NewsController@all');
+
+Route::get('selectie', 'HomeController@getSelectie');
+
+Route::get('programma', 'HomeController@getProgramma');
+
+Route::get('speler_vd_maand', 'HomeController@getSpelervdMaand');
+
 Route::get('evenementen', 'EventController@all');
