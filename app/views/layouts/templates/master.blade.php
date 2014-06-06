@@ -36,13 +36,14 @@
     js = d.createElement(s); js.id = id;
     js.src = "//connect.facebook.net/nl_NL/sdk.js#xfbml=1&appId=1438322229756322&version=v2.0";
     fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
+  }(document, 'script', 'facebook-jssdk'));
+  </script>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron-top"></div>
     <div class="jumbotron">
          <div class="container">
-              <a href="http://quincycollijn.nl"><img class="jumbotron-logo" src="/assets/logo.png" alt="logo" /></a>
+              <a href="{{ url() }}"><img class="jumbotron-logo" src="/assets/logo.png" alt="logo" /></a>
               <nav class="navbar navbar-mainpage navbar-default" role="navigation">
                 <div class="container">
                   <!-- Brand and toggle get grouped for better mobile display -->
@@ -54,20 +55,19 @@
                       <span class="icon-bar"></span>
                     </button>
                   </div>
-
                   <!-- Collect the nav links, forms, and other content for toggling -->
                   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
                     <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">TEAM</a>
-                      <ul class="dropdown-menu">
-                        <li class="li-dropdown"><a class="dropdown-color" href="http://quincycollijn.nl/nieuws">NIEUWS</a></li>
-                        <li class="li-dropdown"><a class="dropdown-color" href="http://quincycollijn.nl/evenementen">EVENEMENTEN</a></li>
-                        <li class="li-dropdown"><a class="dropdown-color" href="#">SELECTIE</a></li>
-                        <li class="li-dropdown"><a class="dropdown-color" href="#">STAFF</a></li>
-                        <li class="li-dropdown"><a class="dropdown-color" href="#">WEDSTRIJDEN &amp; UITSLAGEN</a></li>
-                      </ul>
-                  </li>
+                    @foreach($pages as $page)
+                        <li class="dropdown">
+                          <a href="{{ $page->url }}" class="dropdown-toggle" data-toggle="dropdown">{{ $page->name }}</a>
+                          <ul class="dropdown-menu">
+                            @foreach($page->subpages as $subpage)
+                            <li class="li-dropdown"><a class="dropdown-color" href="{{ $page->url }}/{{ $subpage->url }}">{{ $subpage->name }}</a></li>
+                            @endforeach
+                          </ul>
+                        </li>
+                    @endforeach
                   </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
               </nav>

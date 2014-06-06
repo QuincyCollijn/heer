@@ -26,11 +26,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-      <li class="active"><a href="http://quincycollijn.nl/nieuws">NIEUWS</a></li>
-      	<li><a href="http://quincycollijn.nl/evenementen">Evenementen</a></li>
+      <li class="active"><a href="/nieuws">NIEUWS</a></li>
+      	<li><a href="/evenementen">Evenementen</a></li>
         <li><a href="#">SELECTIE</a></li>
         <li><a href="#">STAFF</a></li>
-        <li><a href="#">WEDSTRIJDEN & UITSLAGEN</a></li>
+        <li><a href="#">WEDSTRIJDEN &amp; UITSLAGEN</a></li>
        </ul>
     </div><!-- /.navbar-collapse -->
   </div>
@@ -41,7 +41,7 @@
 		<div class="col-md-12">
 			@foreach($news as $nieuws)
 				<ol class="breadcrumb">
-				  <li><a href="http://quincycollijn.nl/nieuws">NIEUWS</a></li>
+				  <li><a href="/nieuws">NIEUWS</a></li>
 				  <li class="active">{{ $nieuws->title }}</li>
 				</ol>
 				<div class="media media-subpage">
